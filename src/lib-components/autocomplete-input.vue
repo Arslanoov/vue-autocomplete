@@ -1,5 +1,8 @@
 <template>
-  <div class="a-autocomplete">
+  <div
+    :style="styles"
+    class="a-autocomplete"
+  >
     <input
       @input="e => onContentChange(e.target.value)"
       :style="inputStyles"
@@ -10,7 +13,7 @@
     />
 
     <ul
-      :style="list.styles"
+      :style="listStyles"
       class="a-autocomplete__list"
     >
       <li
@@ -31,7 +34,8 @@ import { defineComponent, PropType, ref, computed } from 'vue';
 import * as CSS from 'csstype';
 
 interface InputInterface {
-  styles?: CSS.Properties
+  styles?: CSS.Properties,
+  defaultValue: string
 }
 
 interface ListInterface {
@@ -54,24 +58,32 @@ export default /*#__PURE__*/defineComponent({
   name: 'AutocompleteInput',
   emits: ['change'],
   props: {
+    styles: {
+      type: Object as PropType<CSS.Properties>,
+      default: {
+        width: '500px'
+      }
+    },
     input: {
       type: Object as PropType<InputInterface>,
-      required: false,
       default: {
-        styles: {}
+        styles: {},
+        defaultValue: ''
       }
     },
     list: {
       type: Object as PropType<ListInterface>,
-      required: false,
       default: {
         styles: {},
         items: []
       }
     },
+    items: {
+      type: Array as PropType<ItemInterface[]>,
+      default: []
+    },
     listItem: {
       type: Object as PropType<ListItemInterface>,
-      required: false,
       default: {
         styles: {
           padding: '2px'
@@ -79,15 +91,14 @@ export default /*#__PURE__*/defineComponent({
       }
     },
   },
-  setup({ input, list, listItem }, { emit }) {
-    /* TODO: 2 way - :value */
-    const content = ref("")
+  setup({ input, list, items, listItem }, { emit }) {
+    const content = ref(input.defaultValue || '')
     const onContentChange = (v: string) => {
       content.value = v;
       emit('change')
     }
 
-    const filteredList = computed(() => list.items.filter(item => item.value.includes(content.value)))
+    const filteredList = computed(() => items.filter(item => item.value.includes(content.value)))
 
     return {
       content,
@@ -96,6 +107,7 @@ export default /*#__PURE__*/defineComponent({
       filteredList,
 
       inputStyles: input?.styles,
+      listStyles: list?.styles,
       listItemStyles: listItem?.styles,
     }
   }
@@ -107,8 +119,20 @@ export default /*#__PURE__*/defineComponent({
   &-autocomplete {
     position: relative;
 
+    font-size: inherit;
+    font-family: inherit;
+
+    & > * {
+      box-sizing: border-box;
+    }
+
+    &__input,
+    &__list {
+      width: 100%;
+    }
+
     &__input {
-      border: none;
+      border: 1px solid green;
       outline: none;
     }
 

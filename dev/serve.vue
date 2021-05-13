@@ -1,19 +1,12 @@
 <template>
   <autocomplete-input
-    :input="inputOptions"
-    :list="listOptions"
+    :items="items"
     @change="testOnChange"
   />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
-const inputOptions = {
-  styles: {
-    border: '1px solid green'
-  }
-};
 
 const items = [
   {
@@ -30,10 +23,6 @@ const items = [
   }
 ];
 
-const listOptions = {
-  items
-};
-
 // import { AutocompleteInputSample } from '@/entry.esm';
 
 export default defineComponent({
@@ -43,8 +32,7 @@ export default defineComponent({
 
     return {
       testOnChange,
-      listOptions,
-      inputOptions
+      items
     }
   }
 });
