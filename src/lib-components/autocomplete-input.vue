@@ -14,7 +14,7 @@
       class="a-autocomplete__list"
     >
       <li
-        v-for="item in list.items"
+        v-for="item in filteredList"
         :key="item.id || item.value"
         :style="listItemStyles"
         class="a-autocomplete__list-item"
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref } from 'vue';
+import { defineComponent, PropType, ref, computed } from 'vue';
 
 import * as CSS from 'csstype';
 
@@ -80,17 +80,20 @@ export default /*#__PURE__*/defineComponent({
     },
   },
   setup({ input, list, listItem }, { emit }) {
+    /* TODO: 2 way - :value */
     const content = ref("")
     const onContentChange = (v: string) => {
       content.value = v;
       emit('change')
     }
 
+    const filteredList = computed(() => list.items.filter(item => item.value.includes(content.value)))
+
     return {
       content,
       onContentChange,
 
-      list,
+      filteredList,
 
       inputStyles: input?.styles,
       listItemStyles: listItem?.styles,
