@@ -110,7 +110,6 @@ if (!argv.format || argv.format === 'es') {
               ...babelPresetEnvConfig,
               targets: esbrowserslist,
             },
-            },
           ],
         ],
       }),

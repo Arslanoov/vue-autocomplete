@@ -1,7 +1,8 @@
 <template>
   <autocomplete-input
-    :items="items"
+    @select="testOnSelect"
     @change="testOnChange"
+    :items="items"
   />
 </template>
 
@@ -20,6 +21,18 @@ const items = [
   {
     id: 3,
     value: 'Item 3'
+  },
+  {
+    id: 4,
+    value: 'Item 4'
+  },
+  {
+    id: 5,
+    value: 'Item 5'
+  },
+  {
+    id: 6,
+    value: 'Item 6'
   }
 ];
 
@@ -28,9 +41,11 @@ const items = [
 export default defineComponent({
   name: 'ServeDev',
   setup() {
+    const testOnSelect = () => console.log('selected')
     const testOnChange = () => console.log('change')
 
     return {
+      testOnSelect,
       testOnChange,
       items
     }

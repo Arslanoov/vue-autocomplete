@@ -1,23 +1,28 @@
 <template>
   <div
+    @mouseleave="onMouseLeave"
     :style="styles"
     class="a-autocomplete"
   >
     <input
       @input="e => onContentChange(e.target.value)"
+      @keyup.enter="onSubmit"
+      @focus="showList"
       :style="inputStyles"
       :value="content"
       class="a-autocomplete__input"
+      ref="inputElement"
       type="text"
-      ref="input"
     />
 
     <ul
       :style="listStyles"
+      :class="{ 'a-autocomplete__list_hidden': !isOpenedList }"
       class="a-autocomplete__list"
     >
       <li
         v-for="item in filteredList"
+        @click="e => onItemClick(e, item)"
         :key="item.id || item.value"
         :style="listItemStyles"
         class="a-autocomplete__list-item"
@@ -56,25 +61,31 @@ interface ItemInterface {
 
 export default /*#__PURE__*/defineComponent({
   name: 'AutocompleteInput',
-  emits: ['change'],
+  emits: ['change', 'submit', 'select'],
   props: {
     styles: {
       type: Object as PropType<CSS.Properties>,
       default: {
-        width: '500px'
+        width: '300px'
       }
     },
     input: {
       type: Object as PropType<InputInterface>,
       default: {
-        styles: {},
+        styles: {
+          padding: '8px 15px',
+          border: '1px solid grey',
+          borderRadius: '2px'
+        },
         defaultValue: ''
       }
     },
     list: {
       type: Object as PropType<ListInterface>,
       default: {
-        styles: {},
+        styles: {
+          height: '105px',
+        },
         items: []
       }
     },
@@ -86,35 +97,82 @@ export default /*#__PURE__*/defineComponent({
       type: Object as PropType<ListItemInterface>,
       default: {
         styles: {
-          padding: '2px'
+          padding: '8px 15px',
+          border: '1px solid grey',
+          borderTop: '0'
         }
       }
     },
   },
   setup({ input, list, items, listItem }, { emit }) {
+    const inputElement = ref<HTMLInputElement>()
+
     const content = ref(input.defaultValue || '')
     const onContentChange = (v: string) => {
       content.value = v;
-      emit('change')
-    }
+      emit('change');
+    };
 
-    const filteredList = computed(() => items.filter(item => item.value.includes(content.value)))
+    const onSubmit = () => emit('submit');
+
+    const isOpenedList = ref(false);
+    const showList = () => isOpenedList.value = true;
+    const hideList = () => isOpenedList.value = false;
+    const filteredList = computed(() => items.filter(item => item.value.includes(content.value)));
+
+    const onItemClick = (e: Event, item: ItemInterface) => {
+      e.preventDefault();
+      content.value = item.value;
+      hideList();
+      emit('select', item);
+    };
+
+    const onMouseLeave = () => {
+      hideList();
+      // TODO: Fix
+      // @ts-ignore
+      inputElement.blur();
+    };
 
     return {
+      inputElement,
+
       content,
       onContentChange,
+      onSubmit,
 
+      onMouseLeave,
+
+      isOpenedList,
+      showList,
+      hideList,
       filteredList,
+
+      onItemClick,
 
       inputStyles: input?.styles,
       listStyles: list?.styles,
       listItemStyles: listItem?.styles,
-    }
+    };
   }
 });
 </script>
 
 <style lang="scss" scoped>
+@mixin pointer-on-hover() {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin without-scrollbar() {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 .a {
   &-autocomplete {
     position: relative;
@@ -137,10 +195,29 @@ export default /*#__PURE__*/defineComponent({
     }
 
     &__list {
+      overflow-y: scroll;
+
       margin: 0;
       padding: 0;
 
       list-style: none;
+
+      opacity: 1;
+
+      transition: opacity .5s;
+
+      /* TODO: Parameter */
+      @include without-scrollbar();
+
+      &_hidden {
+        opacity: 0;
+
+        visibility: hidden;
+      }
+
+      &-item {
+        @include pointer-on-hover();
+      }
     }
   }
 }
