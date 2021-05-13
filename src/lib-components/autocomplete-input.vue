@@ -4,13 +4,23 @@
       @input="e => onContentChange(e.target.value)"
       :style="inputStyles"
       :value="content"
+      class="a-autocomplete__input"
       type="text"
       ref="input"
-      class="a-autocomplete__input"
     />
 
-    <ul>
-
+    <ul
+      :style="list.styles"
+      class="a-autocomplete__list"
+    >
+      <li
+        v-for="item in list.items"
+        :key="item.id || item.value"
+        :style="listItemStyles"
+        class="a-autocomplete__list-item"
+      >
+        {{ item.value }}
+      </li>
     </ul>
   </div>
 </template>
@@ -24,15 +34,52 @@ interface InputInterface {
   styles?: CSS.Properties
 }
 
+interface ListInterface {
+  styles?: CSS.Properties,
+  items: ItemInterface[]
+}
+
+interface ListItemInterface {
+  styles?: CSS.Properties
+}
+
+///////
+
+interface ItemInterface {
+  id?: string | number,
+  value: string
+}
+
 export default /*#__PURE__*/defineComponent({
   name: 'AutocompleteInput',
   emits: ['change'],
   props: {
     input: {
-      type: Object as PropType<InputInterface>
+      type: Object as PropType<InputInterface>,
+      required: false,
+      default: {
+        styles: {}
+      }
+    },
+    list: {
+      type: Object as PropType<ListInterface>,
+      required: false,
+      default: {
+        styles: {},
+        items: []
+      }
+    },
+    listItem: {
+      type: Object as PropType<ListItemInterface>,
+      required: false,
+      default: {
+        styles: {
+          padding: '2px'
+        }
+      }
     },
   },
-  setup({ input }, { emit }) {
+  setup({ input, list, listItem }, { emit }) {
     const content = ref("")
     const onContentChange = (v: string) => {
       content.value = v;
@@ -43,7 +90,10 @@ export default /*#__PURE__*/defineComponent({
       content,
       onContentChange,
 
-      inputStyles: input?.styles
+      list,
+
+      inputStyles: input?.styles,
+      listItemStyles: listItem?.styles,
     }
   }
 });
@@ -52,9 +102,18 @@ export default /*#__PURE__*/defineComponent({
 <style lang="scss" scoped>
 .a {
   &-autocomplete {
+    position: relative;
+
     &__input {
       border: none;
       outline: none;
+    }
+
+    &__list {
+      margin: 0;
+      padding: 0;
+
+      list-style: none;
     }
   }
 }
