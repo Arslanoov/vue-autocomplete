@@ -8,6 +8,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import babel from '@rollup/plugin-babel';
 import PostCSS from 'rollup-plugin-postcss';
+import scss from 'rollup-plugin-scss';
 import { terser } from 'rollup-plugin-terser';
 import minimist from 'minimist';
 
@@ -42,6 +43,7 @@ const baseConfig = {
       'process.env.NODE_ENV': JSON.stringify('production'),
     },
     vue: {
+      preprocessStyles: true
     },
     postVue: [
       resolve({
@@ -108,9 +110,11 @@ if (!argv.format || argv.format === 'es') {
               ...babelPresetEnvConfig,
               targets: esbrowserslist,
             },
+            },
           ],
         ],
       }),
+      scss(),
     ],
   };
   buildFormats.push(esConfig);

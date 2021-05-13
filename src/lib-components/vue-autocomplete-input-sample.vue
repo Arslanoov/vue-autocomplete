@@ -1,3 +1,24 @@
+<template>
+  <div class="vue-autocomplete-input-sample">
+    <p>The counter was {{ changedBy }} to <b>{{ counter }}</b>.</p>
+    <button @click="increment">
+      Click +1
+    </button>
+    <button @click="decrement">
+      Click -1
+    </button>
+    <button @click="increment(5)">
+      Click +5
+    </button>
+    <button @click="decrement(5)">
+      Click -5
+    </button>
+    <button @click="reset">
+      Reset
+    </button>
+  </div>
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 
@@ -51,28 +72,7 @@ export default /*#__PURE__*/defineComponent({
 });
 </script>
 
-<template>
-  <div class="vue-autocomplete-input-sample">
-    <p>The counter was {{ changedBy }} to <b>{{ counter }}</b>.</p>
-    <button @click="increment">
-      Click +1
-    </button>
-    <button @click="decrement">
-      Click -1
-    </button>
-    <button @click="increment(5)">
-      Click +5
-    </button>
-    <button @click="decrement(5)">
-      Click -5
-    </button>
-    <button @click="reset">
-      Reset
-    </button>
-  </div>
-</template>
-
-<style scoped>
+<style lang="scss" scoped>
   .vue-autocomplete-input-sample {
     display: block;
     width: 400px;
@@ -81,8 +81,9 @@ export default /*#__PURE__*/defineComponent({
     background: #eaeaea;
     text-align: center;
     padding: 25px;
-  }
-  .vue-autocomplete-input-sample p {
-    margin: 0 0 1em;
+
+    p {
+      margin: 0 0 1em;
+    }
   }
 </style>
