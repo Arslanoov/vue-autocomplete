@@ -1,18 +1,31 @@
+<template>
+  <autocomplete-input
+    :input="inputOptions"
+    @change="testOnChange"
+  />
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue';
-// Uncomment import and local "components" registration if library is not registered globally.
-// import { VueAutocompleteInputSample } from '@/entry.esm';
+
+const inputOptions = {
+  styles: {
+    border: '1px solid green'
+  }
+}
+
+// import { AutocompleteInputSample } from '@/entry.esm';
 
 export default defineComponent({
   name: 'ServeDev',
-  // components: {
-  //  VueAutocompleteInputSample,
-  // }
+  setup() {
+    const testOnChange = () => alert("change")
+
+    return {
+      testOnChange,
+
+      inputOptions
+    }
+  }
 });
 </script>
-
-<template>
-  <div id="app">
-    <vue-autocomplete-input-sample />
-  </div>
-</template>
