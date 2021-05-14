@@ -1,5 +1,5 @@
 {
-  "name": "vue-autocomplete-input",
+  "name": "@arslanoov/vue-autocomplete-input",
   "version": "0.1.0",
   "description": "Autocomplete for Vue 3",
   "main": "dist/vue-autocomplete-input.ssr.js",
