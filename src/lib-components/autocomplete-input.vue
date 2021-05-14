@@ -63,6 +63,10 @@ export default /*#__PURE__*/defineComponent({
   name: 'AutocompleteInput',
   emits: ['change', 'submit', 'select'],
   props: {
+    caseSensitive: {
+      type: Boolean,
+      default: true
+    },
     styles: {
       type: Object as PropType<CSS.Properties>,
       default: {
@@ -104,7 +108,7 @@ export default /*#__PURE__*/defineComponent({
       }
     },
   },
-  setup({ input, list, items, listItem }, { emit }) {
+  setup({ caseSensitive, input, list, items, listItem }, { emit }) {
     const inputElement = ref<HTMLInputElement>()
 
     const content = ref(input.defaultValue || '')
@@ -118,7 +122,12 @@ export default /*#__PURE__*/defineComponent({
     const isOpenedList = ref(false);
     const showList = () => isOpenedList.value = true;
     const hideList = () => isOpenedList.value = false;
-    const filteredList = computed(() => items.filter(item => item.value.includes(content.value)));
+    const filteredList = computed(() =>
+      items.filter(item => {
+        const itemValue = caseSensitive ? item.value : item.value.toLowerCase();
+        const contentValue = caseSensitive ? content.value : content.value.toLowerCase();
+        return itemValue.includes(contentValue);
+      }));
 
     const onItemClick = (e: Event, item: ItemInterface) => {
       e.preventDefault();
@@ -204,7 +213,6 @@ export default /*#__PURE__*/defineComponent({
 
       transition: opacity .5s;
 
-      /* TODO: Parameter */
       @include without-scrollbar();
 
       &_hidden {
