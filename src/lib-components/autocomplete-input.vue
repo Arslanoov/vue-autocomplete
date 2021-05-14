@@ -69,49 +69,49 @@ export default /*#__PURE__*/defineComponent({
     },
     styles: {
       type: Object as PropType<CSS.Properties>,
-      default: {
+      default: () => ({
         width: '300px'
-      }
+      })
     },
     input: {
       type: Object as PropType<InputInterface>,
-      default: {
+      default: () => ({
         styles: {
           padding: '8px 15px',
           border: '1px solid grey',
           borderRadius: '2px'
         },
         defaultValue: ''
-      }
+      })
     },
     list: {
       type: Object as PropType<ListInterface>,
-      default: {
+      default: () => ({
         styles: {
           height: '105px',
         },
         items: []
-      }
+      })
     },
     items: {
       type: Array as PropType<ItemInterface[]>,
-      default: []
+      default: () => []
     },
     listItem: {
       type: Object as PropType<ListItemInterface>,
-      default: {
+      default: () => ({
         styles: {
           padding: '8px 15px',
           border: '1px solid grey',
           borderTop: '0'
         }
-      }
+      })
     },
   },
   setup({ caseSensitive, input, list, items, listItem }, { emit }) {
-    const inputElement = ref<HTMLInputElement>()
+    const inputElement = ref<HTMLInputElement>();
 
-    const content = ref(input.defaultValue || '')
+    const content = ref(input.defaultValue || '');
     const onContentChange = (v: string) => {
       content.value = v;
       emit('change');
