@@ -166,19 +166,8 @@ export default /*#__PURE__*/defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@mixin pointer-on-hover() {
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-@mixin without-scrollbar() {
-  scrollbar-width: none;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
+@import "/src/assets/styles/vars";
+@import "/src/assets/styles/mixins";
 
 .a {
   &-autocomplete {
@@ -197,7 +186,7 @@ export default /*#__PURE__*/defineComponent({
     }
 
     &__input {
-      border: 1px solid green;
+      border: $a-autocomplete-input-border;
       outline: none;
     }
 
@@ -211,7 +200,7 @@ export default /*#__PURE__*/defineComponent({
 
       opacity: 1;
 
-      transition: opacity .5s;
+      transition: $a-autocomplete-transition;
 
       @include without-scrollbar();
 
