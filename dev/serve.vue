@@ -3,6 +3,7 @@
     @select="testOnSelect"
     @change="testOnChange"
     :items="items"
+    :case-sensitive="false"
   />
 </template>
 
