@@ -1,9 +1,5 @@
 <template>
-  <div
-    @mouseleave="onMouseLeave"
-    :style="styles"
-    class="a-autocomplete"
-  >
+  <div @mouseleave="onMouseLeave" :style="styles" class="a-autocomplete">
     <input
       @input="e => onContentChange(e.target.value)"
       @keyup.enter="onSubmit"
@@ -34,34 +30,34 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from 'vue';
+import { defineComponent, PropType, ref, computed } from "vue";
 
-import * as CSS from 'csstype';
+import * as CSS from "csstype";
 
 interface InputInterface {
-  styles?: CSS.Properties,
-  defaultValue: string
+  styles?: CSS.Properties;
+  defaultValue: string;
 }
 
 interface ListInterface {
-  styles?: CSS.Properties,
-  items: ItemInterface[]
+  styles?: CSS.Properties;
+  items: ItemInterface[];
 }
 
 interface ListItemInterface {
-  styles?: CSS.Properties
+  styles?: CSS.Properties;
 }
 
 ///////
 
 interface ItemInterface {
-  id?: string | number,
-  value: string
+  id?: string | number;
+  value: string;
 }
 
-export default /*#__PURE__*/defineComponent({
-  name: 'AutocompleteInput',
-  emits: ['change', 'submit', 'select'],
+export default /*#__PURE__*/ defineComponent({
+  name: "AutocompleteInput",
+  emits: ["change", "submit", "select"],
   props: {
     caseSensitive: {
       type: Boolean,
@@ -70,25 +66,25 @@ export default /*#__PURE__*/defineComponent({
     styles: {
       type: Object as PropType<CSS.Properties>,
       default: () => ({
-        width: '300px'
+        width: "300px"
       })
     },
     input: {
       type: Object as PropType<InputInterface>,
       default: () => ({
         styles: {
-          padding: '8px 15px',
-          border: '1px solid grey',
-          borderRadius: '2px'
+          padding: "8px 15px",
+          border: "1px solid grey",
+          borderRadius: "2px"
         },
-        defaultValue: ''
+        defaultValue: ""
       })
     },
     list: {
       type: Object as PropType<ListInterface>,
       default: () => ({
         styles: {
-          height: '105px',
+          height: "105px"
         },
         items: []
       })
@@ -101,39 +97,42 @@ export default /*#__PURE__*/defineComponent({
       type: Object as PropType<ListItemInterface>,
       default: () => ({
         styles: {
-          padding: '8px 15px',
-          border: '1px solid grey',
-          borderTop: '0'
+          padding: "8px 15px",
+          border: "1px solid grey",
+          borderTop: "0"
         }
       })
-    },
+    }
   },
   setup({ caseSensitive, input, list, items, listItem }, { emit }) {
     const inputElement = ref<HTMLInputElement>();
 
-    const content = ref(input.defaultValue || '');
+    const content = ref(input.defaultValue || "");
     const onContentChange = (v: string) => {
       content.value = v;
-      emit('change');
+      emit("change");
     };
 
-    const onSubmit = () => emit('submit');
+    const onSubmit = () => emit("submit");
 
     const isOpenedList = ref(false);
-    const showList = () => isOpenedList.value = true;
-    const hideList = () => isOpenedList.value = false;
+    const showList = () => (isOpenedList.value = true);
+    const hideList = () => (isOpenedList.value = false);
     const filteredList = computed(() =>
       items.filter(item => {
         const itemValue = caseSensitive ? item.value : item.value.toLowerCase();
-        const contentValue = caseSensitive ? content.value : content.value.toLowerCase();
+        const contentValue = caseSensitive
+          ? content.value
+          : content.value.toLowerCase();
         return itemValue.includes(contentValue);
-      }));
+      })
+    );
 
     const onItemClick = (e: Event, item: ItemInterface) => {
       e.preventDefault();
       content.value = item.value;
       hideList();
-      emit('select', item);
+      emit("select", item);
     };
 
     const onMouseLeave = () => {
@@ -159,7 +158,7 @@ export default /*#__PURE__*/defineComponent({
 
       inputStyles: input?.styles,
       listStyles: list?.styles,
-      listItemStyles: listItem?.styles,
+      listItemStyles: listItem?.styles
     };
   }
 });
