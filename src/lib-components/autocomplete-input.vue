@@ -129,9 +129,7 @@ export default /*#__PURE__*/defineComponent({
 
     const onMouseLeave = () => {
       hideList();
-      // TODO: Fix
-      // @ts-ignore
-      inputElement.blur();
+      (inputElement.value as HTMLInputElement).blur();
     };
 
     return {
