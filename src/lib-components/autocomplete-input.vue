@@ -30,9 +30,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, computed } from "vue";
+import { defineComponent, PropType, ref, computed } from 'vue';
 
-import * as CSS from "csstype";
+import * as CSS from 'csstype';
 
 interface InputInterface {
   styles?: CSS.Properties;
@@ -56,8 +56,8 @@ interface ItemInterface {
 }
 
 export default /*#__PURE__*/ defineComponent({
-  name: "AutocompleteInput",
-  emits: ["change", "submit", "select"],
+  name: 'AutocompleteInput',
+  emits: ['change', 'submit', 'select'],
   props: {
     caseSensitive: {
       type: Boolean,
@@ -66,25 +66,25 @@ export default /*#__PURE__*/ defineComponent({
     styles: {
       type: Object as PropType<CSS.Properties>,
       default: () => ({
-        width: "300px"
+        width: '300px'
       })
     },
     input: {
       type: Object as PropType<InputInterface>,
       default: () => ({
         styles: {
-          padding: "8px 15px",
-          border: "1px solid grey",
-          borderRadius: "2px"
+          padding: '8px 15px',
+          border: '1px solid grey',
+          borderRadius: '2px'
         },
-        defaultValue: ""
+        defaultValue: ''
       })
     },
     list: {
       type: Object as PropType<ListInterface>,
       default: () => ({
         styles: {
-          height: "105px"
+          height: '105px'
         },
         items: []
       })
@@ -97,9 +97,9 @@ export default /*#__PURE__*/ defineComponent({
       type: Object as PropType<ListItemInterface>,
       default: () => ({
         styles: {
-          padding: "8px 15px",
-          border: "1px solid grey",
-          borderTop: "0"
+          padding: '8px 15px',
+          border: '1px solid grey',
+          borderTop: '0'
         }
       })
     }
@@ -107,13 +107,13 @@ export default /*#__PURE__*/ defineComponent({
   setup({ caseSensitive, input, list, items, listItem }, { emit }) {
     const inputElement = ref<HTMLInputElement>();
 
-    const content = ref(input.defaultValue || "");
+    const content = ref(input.defaultValue || '');
     const onContentChange = (v: string) => {
       content.value = v;
-      emit("change");
+      emit('change');
     };
 
-    const onSubmit = () => emit("submit");
+    const onSubmit = () => emit('submit');
 
     const isOpenedList = ref(false);
     const showList = () => (isOpenedList.value = true);
@@ -132,7 +132,7 @@ export default /*#__PURE__*/ defineComponent({
       e.preventDefault();
       content.value = item.value;
       hideList();
-      emit("select", item);
+      emit('select', item);
     };
 
     const onMouseLeave = () => {
@@ -165,8 +165,28 @@ export default /*#__PURE__*/ defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "/src/assets/styles/vars";
-@import "/src/assets/styles/mixins";
+// TODO: Separate file
+// Variables
+$a-autocomplete-transition-duration: .5s;
+$a-autocomplete-transition: opacity $a-autocomplete-transition-duration;
+
+$a-autocomplete-input-border-color: grey;
+$a-autocomplete-input-border: 1px solid $a-autocomplete-input-border-color;
+
+// Mixins
+@mixin pointer-on-hover() {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+@mixin without-scrollbar() {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 .a {
   &-autocomplete {
