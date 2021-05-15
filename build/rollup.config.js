@@ -40,6 +40,7 @@ const baseConfig = {
       }),
     ],
     replace: {
+      preventAssignment: true,
       'process.env.NODE_ENV': JSON.stringify('production'),
     },
     vue: {
@@ -98,6 +99,7 @@ if (!argv.format || argv.format === 'es') {
     },
     plugins: [
       replace(baseConfig.plugins.replace),
+      scss(),
       ...baseConfig.plugins.preVue,
       vue(baseConfig.plugins.vue),
       ...baseConfig.plugins.postVue,
@@ -113,7 +115,6 @@ if (!argv.format || argv.format === 'es') {
           ],
         ],
       }),
-      scss(),
     ],
   };
   buildFormats.push(esConfig);
