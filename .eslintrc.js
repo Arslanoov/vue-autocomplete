@@ -23,6 +23,7 @@ module.exports = {
     indent: ['error', 2],
 
     '@typescript-eslint/no-var-requires': 0,
-    '@typescript-eslint/no-empty-function': 0
+    '@typescript-eslint/no-empty-function': 0,
+    '@typescript-eslint/ban-types': 0
   }
 };
