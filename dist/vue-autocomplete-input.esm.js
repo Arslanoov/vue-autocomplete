@@ -30,8 +30,7 @@ var script = /*#__PURE__*/defineComponent({
       default: () => ({
         styles: {
           height: '105px'
-        },
-        items: []
+        }
       })
     },
     items: {
@@ -64,7 +63,7 @@ var script = /*#__PURE__*/defineComponent({
 
     const onContentChange = v => {
       content.value = v;
-      emit('change');
+      emit('change', v);
     };
 
     const onSubmit = () => emit('submit');
@@ -112,7 +111,7 @@ var script = /*#__PURE__*/defineComponent({
 
 });
 
-const _withId = /*#__PURE__*/withScopeId("data-v-2b615c9c");
+const _withId = /*#__PURE__*/withScopeId("data-v-3c8b2290");
 
 const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $options) => {
   return openBlock(), createBlock("div", {
@@ -174,7 +173,7 @@ var css_248z = "";
 styleInject(css_248z);
 
 script.render = render;
-script.__scopeId = "data-v-2b615c9c";
+script.__scopeId = "data-v-3c8b2290";
 
 /* eslint-disable import/prefer-default-export */
 
