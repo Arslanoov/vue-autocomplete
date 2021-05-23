@@ -42,14 +42,14 @@ const items = [
 export default defineComponent({
   name: 'ServeDev',
   setup() {
-    const testOnSelect = () => console.log('selected')
-    const testOnChange = () => console.log('change')
+    const testOnSelect = () => console.log('selected');
+    const testOnChange = () => console.log('change');
 
     return {
       testOnSelect,
       testOnChange,
       items
-    }
+    };
   }
 });
 </script>

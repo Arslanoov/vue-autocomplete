@@ -41,14 +41,11 @@ interface InputInterface {
 
 interface ListInterface {
   styles?: CSS.Properties;
-  items: ItemInterface[];
 }
 
 interface ListItemInterface {
   styles?: CSS.Properties;
 }
-
-///////
 
 interface ItemInterface {
   id?: string | number;
@@ -85,8 +82,7 @@ export default /*#__PURE__*/ defineComponent({
       default: () => ({
         styles: {
           height: '105px'
-        },
-        items: []
+        }
       })
     },
     items: {
@@ -110,7 +106,7 @@ export default /*#__PURE__*/ defineComponent({
     const content = ref(input.defaultValue || '');
     const onContentChange = (v: string) => {
       content.value = v;
-      emit('change');
+      emit('change', v);
     };
 
     const onSubmit = () => emit('submit');
