@@ -90,8 +90,7 @@ function _nonIterableRest() {
         return {
           styles: {
             height: '105px'
-          },
-          items: []
+          }
         };
       }
     },
@@ -126,7 +125,7 @@ function _nonIterableRest() {
 
     var onContentChange = function onContentChange(v) {
       content.value = v;
-      emit('change');
+      emit('change', v);
     };
 
     var onSubmit = function onSubmit() {
@@ -179,7 +178,7 @@ function _nonIterableRest() {
       listItemStyles: listItem === null || listItem === void 0 ? void 0 : listItem.styles
     };
   }
-});var _withId = /*#__PURE__*/vue.withScopeId("data-v-2b615c9c");
+});var _withId = /*#__PURE__*/vue.withScopeId("data-v-3c8b2290");
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   return vue.openBlock(), vue.createBlock("div", {
@@ -243,9 +242,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   } else {
     style.appendChild(document.createTextNode(css));
   }
-}var css_248z = ".a-autocomplete[data-v-2b615c9c] {\n  position: relative;\n  font-size: inherit;\n  font-family: inherit;\n}\n.a-autocomplete > *[data-v-2b615c9c] {\n  box-sizing: border-box;\n}\n.a-autocomplete__input[data-v-2b615c9c], .a-autocomplete__list[data-v-2b615c9c] {\n  width: 100%;\n}\n.a-autocomplete__input[data-v-2b615c9c] {\n  border: 1px solid grey;\n  outline: none;\n}\n.a-autocomplete__list[data-v-2b615c9c] {\n  overflow-y: scroll;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  opacity: 1;\n  transition: opacity 0.5s;\n  scrollbar-width: none;\n}\n.a-autocomplete__list[data-v-2b615c9c]::-webkit-scrollbar {\n  display: none;\n}\n.a-autocomplete__list_hidden[data-v-2b615c9c] {\n  opacity: 0;\n  visibility: hidden;\n}\n.a-autocomplete__list-item[data-v-2b615c9c]:hover {\n  cursor: pointer;\n}";
+}var css_248z = ".a-autocomplete[data-v-3c8b2290] {\n  position: relative;\n  font-size: inherit;\n  font-family: inherit;\n}\n.a-autocomplete > *[data-v-3c8b2290] {\n  box-sizing: border-box;\n}\n.a-autocomplete__input[data-v-3c8b2290], .a-autocomplete__list[data-v-3c8b2290] {\n  width: 100%;\n}\n.a-autocomplete__input[data-v-3c8b2290] {\n  border: 1px solid grey;\n  outline: none;\n}\n.a-autocomplete__list[data-v-3c8b2290] {\n  overflow-y: scroll;\n  margin: 0;\n  padding: 0;\n  list-style: none;\n  opacity: 1;\n  transition: opacity 0.5s;\n  scrollbar-width: none;\n}\n.a-autocomplete__list[data-v-3c8b2290]::-webkit-scrollbar {\n  display: none;\n}\n.a-autocomplete__list_hidden[data-v-3c8b2290] {\n  opacity: 0;\n  visibility: hidden;\n}\n.a-autocomplete__list-item[data-v-3c8b2290]:hover {\n  cursor: pointer;\n}";
 styleInject(css_248z);script.render = render;
-script.__scopeId = "data-v-2b615c9c";/* eslint-disable import/prefer-default-export */var components$1=/*#__PURE__*/Object.freeze({__proto__:null,AutocompleteInput: script});var install = function installVueAutocompleteInput(app) {
+script.__scopeId = "data-v-3c8b2290";/* eslint-disable import/prefer-default-export */var components$1=/*#__PURE__*/Object.freeze({__proto__:null,AutocompleteInput: script});var install = function installVueAutocompleteInput(app) {
   Object.entries(components$1).forEach(function (_ref) {
     var _ref2 = _slicedToArray(_ref, 2),
         componentName = _ref2[0],
