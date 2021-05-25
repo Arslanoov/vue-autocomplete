@@ -5,7 +5,7 @@
       @keyup.enter="onSubmit"
       @focus="showList"
       :style="inputStyles"
-      :value="content"
+      :value="value"
       class="a-autocomplete__input"
       ref="inputElement"
       type="text"
@@ -56,9 +56,13 @@ export default /*#__PURE__*/ defineComponent({
   name: 'AutocompleteInput',
   emits: ['change', 'submit', 'select'],
   props: {
+    value: {
+      type: String,
+      default: () => ''
+    },
     caseSensitive: {
       type: Boolean,
-      default: true
+      default: () => true
     },
     styles: {
       type: Object as PropType<CSS.Properties>,
@@ -100,14 +104,10 @@ export default /*#__PURE__*/ defineComponent({
       })
     }
   },
-  setup({ caseSensitive, input, list, items, listItem }, { emit }) {
+  setup({ value, caseSensitive, input, list, items, listItem }, { emit }) {
     const inputElement = ref<HTMLInputElement>();
 
-    const content = ref(input.defaultValue || '');
-    const onContentChange = (v: string) => {
-      content.value = v;
-      emit('change', v);
-    };
+    const onContentChange = (v: string) => emit('change', v);
 
     const onSubmit = () => emit('submit');
 
@@ -118,15 +118,14 @@ export default /*#__PURE__*/ defineComponent({
       items.filter(item => {
         const itemValue = caseSensitive ? item.value : item.value.toLowerCase();
         const contentValue = caseSensitive
-          ? content.value
-          : content.value.toLowerCase();
+          ? value
+          : value.toLowerCase();
         return itemValue.includes(contentValue);
       })
     );
 
     const onItemClick = (e: Event, item: ItemInterface) => {
       e.preventDefault();
-      content.value = item.value;
       hideList();
       emit('select', item);
     };
@@ -139,7 +138,6 @@ export default /*#__PURE__*/ defineComponent({
     return {
       inputElement,
 
-      content,
       onContentChange,
       onSubmit,
 
@@ -161,15 +159,12 @@ export default /*#__PURE__*/ defineComponent({
 </script>
 
 <style lang="scss" scoped>
-// TODO: Separate file
-// Variables
 $a-autocomplete-transition-duration: .5s;
 $a-autocomplete-transition: opacity $a-autocomplete-transition-duration;
 
 $a-autocomplete-input-border-color: grey;
 $a-autocomplete-input-border: 1px solid $a-autocomplete-input-border-color;
 
-// Mixins
 @mixin pointer-on-hover() {
   &:hover {
     cursor: pointer;

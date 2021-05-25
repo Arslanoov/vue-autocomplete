@@ -1,14 +1,17 @@
 <template>
-  <autocomplete-input
-    @select="testOnSelect"
-    @change="testOnChange"
-    :items="items"
-    :case-sensitive="false"
-  />
+  <div>
+    <autocomplete-input
+      @select="testOnSelect"
+      @change="testOnChange"
+      :items="items"
+      :value="content"
+      :case-sensitive="false"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 const items = [
   {
@@ -34,6 +37,10 @@ const items = [
   {
     id: 6,
     value: 'Item 6'
+  },
+  {
+    id: 7,
+    value: 'test 7'
   }
 ];
 
@@ -42,13 +49,16 @@ const items = [
 export default defineComponent({
   name: 'ServeDev',
   setup() {
-    const testOnSelect = () => console.log('selected');
-    const testOnChange = () => console.log('change');
+    const content = ref('');
+
+    const testOnSelect = ({ v }: { v: string }) => content.value = v;
+    const testOnChange = (v: string) => content.value = v;
 
     return {
       testOnSelect,
       testOnChange,
-      items
+      items,
+      content
     };
   }
 });
